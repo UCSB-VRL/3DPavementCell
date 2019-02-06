@@ -10,3 +10,14 @@ transformation
 *.pyc
 *.swp
 *.swo
+DenseInferenceWrapper
+frangi3d
+geodesic_distance
+Adaptive_Threshold.py
+celltrackdataset.py
+handcraft.py
+preprocess.py
+region_grow.py
+transformation.py
+watershed.py
+
