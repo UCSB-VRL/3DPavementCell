@@ -186,8 +186,8 @@ class Modified3DUNet(nn.Module):
 		ds1_ds2_sum_upscale_ds3_sum_upscale = self.upsacle(ds1_ds2_sum_upscale_ds3_sum)
 
 		out = out_pred + ds1_ds2_sum_upscale_ds3_sum_upscale
-		seg_layer = out
-		out = out.permute(0, 2, 3, 4, 1).contiguous().view(-1, self.n_classes)
+		#seg_layer = out
+		#out = out.permute(0, 2, 3, 4, 1).contiguous().view(-1, self.n_classes)
 		#out = out.view(-1, self.n_classes)
 		out = self.softmax(out)
-		return out, seg_layer
+		return out
