@@ -7,3 +7,6 @@ hist_match_tv
 ICIPPNAS
 ICIP_PNAS
 transformation
+*.pyc
+*.swp
+*.swo
