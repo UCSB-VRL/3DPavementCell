@@ -79,18 +79,32 @@ def propagate(img,one_cell,sli_ind):
 
 
 def main():
-
-    seg = sitk.ReadImage('/home/tom/celldata/backgroundSubtracted_T01.tif')
+    seg = sitk.ReadImage('/home/tom/1_23_result/pro_3.tif')
+    #sitk.WriteImage(seg,'/home/tom/1_23_result/ori.nii')
     seg = sitk.GetArrayFromImage(seg)
-    seg = seg.astype('float')
-    seg = seg/255
+    #seg = seg.astype('float')
+    #seg = seg/255
     x_start = int(6.54/20.16*512)
     x_end = int(17.56/20.16*512)
     y_start = int(6.10/20.16*512)
     y_end = int(15.19/20.16*512)
+
+    x_start = int(49.1/108.36*512)
+    x_end = int(84.44/108.36*512)
+    y_start = int(55.87/108.36*512)
+    y_end = int(92.49/108.36*512)
+    x_start = int(40.42/108.36*512)
+    x_end = int(75.76/108.36*512)
+    y_start = int(71.74/108.36*512)
+    y_end = int(113.87/108.36*512)
+    '''
+    x_start = int(37.88/108.36*512)
+    x_end = int(70.05/108.36*512)
+    y_start = int(75.98/108.36*512)
+    y_end = int(91.22/108.36*512)
     '''
     shot = np.zeros((y_end-y_start,x_end-x_start))
-    seg_sli = seg[0]
+    seg_sli = seg[7]
     #seg_sli[seg_sli==1]=0
     #seg_sli[seg_sli==18]=0
     shot = seg_sli[y_start:y_end,x_start:x_end]
@@ -103,12 +117,16 @@ def main():
     #line = segmentation.find_boundaries(shot,connectivity=1,mode='thick')
     #line = line*1
     #print np.unique(shot)
-    fig = plt.imshow(shot,cmap='gray')
+    #shot_img = sitk.GetImageFromArray((shot*255).astype('uint8'))
+    #sitk.WriteImage(shot_img,'/home/tom/1_23_result/exp_fig1.jpg')
+    #seg_img = sitk.GetImageFromArray(((1-seg)*255).astype('uint8'))
+    #sitk.WriteImage(seg_img,'/home/tom/1_23_result/invert_porb.nii')
+    plt.imsave('/home/tom/1_23_result/pro_ACME.png',shot,cmap='jet')
+    fig = plt.imshow(shot,cmap='jet')
     fig.axes.get_xaxis().set_visible(False)
     fig.axes.get_yaxis().set_visible(False)
     plt.show()
     exit(0)
-    '''
 
 
     #above is for paper
@@ -182,9 +200,15 @@ def main():
     first = np.zeros((512,512))
     #last[400:402,259:262]=30
     first[274,243]=1
+    first[int(68.57/108.36*512),int(70.05/108.36*512)]=1
     #mask_3d[5]=last
     #mask_3d[18*5]=last
     mask_3d[0,372:375,242:244]=30
+    mask_3d[0,int(68.57/108.36*512)-1:int(68.57/108.36*512)+1,int(70.05/108.36*512)-1:int(70.05/108.36*512)+1]=31
+    #mask_3d[0,int(92.06/108.36*512)-1:int(92.06/108.36*512)+1,int(47.83/108.36*512)-1:int(47.83/108.36*512)+1]=30
+    #mask_3d[0,int(100.11/108.36*512)-1:int(100.11/108.36*512)+1,int(40.21/108.36*512)-1:int(40.21/108.36*512)+1]=30
+    #mask_3d[0,int(104.13/108.36*512)-1:int(104.13/108.36*512)+1,int(21.8/108.36*512)-1:int(21.8/108.36*512)+1]=30
+    #mask_3d[0,int(78.52/108.36*512)-1:int(78.52/108.36*512)+1,int(78.73/108.36*512)-1:int(78.73/108.36*512)+1]=30
     #masks_img = sitk.GetImageFromArray((masks*255).astype('uint8'))
     #sitk.WriteImage(masks_img,'/home/tom/result/'+'seeds.png')
     #masks = random_walker(seg_new,mask_3d,beta=10,mode='bf')
@@ -193,6 +217,8 @@ def main():
     print np.unique(masks)
     #one_cell = (masks==11)*1
     masks[masks==30]=0
+    masks[masks==18]=0
+    masks[masks==31]=0
     '''#CRF
     #distance_one_cell = ndi.distance_transform_edt(one_cell)
     #distance_one_cell[distance_one_cell>15] = np.amax(distance_one_cell)
@@ -213,7 +239,8 @@ def main():
     #masks = resize(masks,(masks.shape[0]/5,masks.shape[1],masks.shape[2]),mode='constant')
     masks_img = sitk.GetImageFromArray((masks).astype('uint8'))
     sitk.WriteImage(masks_img,'/home/tom/1_8_result/'+filename+'seg.tif')'''
-    fig = plt.imshow(masks[0,y_start:y_end,x_start:x_end])
+    plt.imsave('/home/tom/1_23_result/result.png',masks[0,:,:],cmap='jet')
+    fig = plt.imshow(masks[0,:,:])
     fig.axes.get_xaxis().set_visible(False)
     fig.axes.get_yaxis().set_visible(False)
     #print np.unique(masks)
