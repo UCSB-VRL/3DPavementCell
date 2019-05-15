@@ -1,6 +1,8 @@
-# 3D UNet Cell Segmentation
+# 3D UNet Cell Analysis
 
-## This is for 3D membrane tagged image segmentation
+## Part of this repo is for 3D membrane tagged image segmentation
+
+## To run the segmentation code
 
 ### Prerequisites
 
